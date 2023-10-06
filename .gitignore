@@ -1,0 +1,34 @@
+# CDK
+!jest.config.js
+./*.d.ts
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Jest
+coverage
+
+# Localstack
+.localstack
+
+# OS files and directories
+.DS_Store
+
+# Package directories
+node_modules
+
+# Project specific files/directories
+*.env
+.env.*
+**.*.env
+!.env.example
+
+# Temporary Directory
+tmp/
+
+# Certificates
+*.cer
+*.cert
+*.crt
+*.pem

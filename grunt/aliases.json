@@ -1,19 +1,25 @@
 {
   "aws:session": ["shell:aws-session-check", "shell:aws-session-login"],
-  "bootstrap": ["pre-cdk", "aws:session", "shell:cdk-bootstrap"],
-  "ci:deploy": ["pre-cdk", "shell:cdk-deploy:true"],
-  "ci:destroy": ["pre-cdk", "shell:cleanupCertificateRecords:true", "shell:cdk-destroy:true"],
-  "ci:getSSMRecord": ["pre-cdk", "shell:getSSMRecord:true", "post-cdk"],
-  "deploy": ["pre-cdk", "aws:session", "shell:cdk-deploy"],
+  "bootstrap": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-bootstrap"],
+  "ci:deploy": ["pre-cdk", "cdk:bin", "shell:cdk-deploy"],
+  "ci:destroy": ["pre-cdk", "cdk:bin", "shell:cleanupCertificateRecords", "shell:cdk-destroy"],
+  "ci:getSSMRecord": ["pre-cdk", "cdk:bin", "shell:getSSMRecord"],
+  "deploy": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-deploy"],
   "destroy": [
     "pre-cdk",
+    "cdk:bin", 
     "aws:session",
     "shell:cleanupCertificateRecords",
     "shell:cdk-destroy"
   ],
-  "diff": ["pre-cdk", "aws:session", "shell:cdk-diff"],
-  "getSSMRecord": ["pre-cdk", "shell:getSSMRecord", "post-cdk"],
-  "post-cdk": ["variables:json"],
-  "pre-cdk": ["environment", "dotenv", "branch", "clean:cdk", "clean:local", "cdk:bin"],
-  "synth": ["pre-cdk", "aws:session", "shell:cdk-synth"]
+  "diff": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-diff"],
+  "getSSMRecord": ["pre-cdk", "cdk:bin", "shell:getSSMRecord"],
+  "local": [
+    "pre-cdk",
+    "clean:local",
+    "stack:environment"
+  ],
+  "pre-cdk": ["environment", "dotenv", "branch"],
+  "stack:environment": ["cdk:environment", "shell:cdk-bootstrap", "shell:cdk-deploy:environment"],
+  "synth": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-synth"]
 }

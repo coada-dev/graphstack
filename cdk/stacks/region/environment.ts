@@ -5,6 +5,7 @@ import { Construct } from "constructs";
 
 import { formatCDKLogicalID } from "#helpers/cdk.ts";
 import { environment, fqdn } from "#helpers/configuration.ts";
+import { isLocal } from "#helpers/environment.ts";
 import { isProd } from "#helpers/environment.ts";
 import VpcStack from "#nestedstacks/ec2/vpc.ts";
 import DNSStack from "#nestedstacks/r53/domain.ts";
@@ -35,11 +36,14 @@ export default class EnvironmentStack extends Stack {
     );
     mailSubdomain.node.addDependency(primarySubdomain);
 
-    const ses = new EmailIdentity(this, "ses-identity", {
-      identity: Identity.publicHostedZone(primarySubdomain),
-      mailFromDomain: `mail.${fqdn}`,
-    });
-    ses.node.addDependency(mailSubdomain);
+    // NOTE: https://docs.localstack.cloud/references/coverage/coverage_ses/
+    if (!isLocal(environment)) {
+      const ses = new EmailIdentity(this, "ses-identity", {
+        identity: Identity.publicHostedZone(primarySubdomain),
+        mailFromDomain: `mail.${fqdn}`,
+      });
+      ses.node.addDependency(mailSubdomain);
+    }
 
     const { vpc }: VpcStack = new VpcStack(this, {
       ipAddresses: IpAddresses.cidr("172.0.0.0/16"),

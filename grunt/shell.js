@@ -6,7 +6,6 @@ const cdk = require("./helpers/cdk");
 
 const factory = (grunt, stackname) => {
   const { profile, bin, environment, local } = cdk();
-  const application = grunt.config.get("application");
   const branch = grunt.config.get("branch");
   const zscaler = grunt.option("zscaler");
 
@@ -20,7 +19,7 @@ const factory = (grunt, stackname) => {
     vars = `${vars} CDK_ZSCALER=true`;
   }
 
-  const stack = application === "account" ? stackname : `${branch}-${stackname}`;
+  const stack = `${branch}-${stackname}`;
   vars = `${vars} CDK_BRANCH=${branch}`;
   return { bin, branch, environment, profile, stack, vars };
 };
@@ -33,9 +32,9 @@ const options = {
 
 module.exports = (grunt) => ({
   cleanupCertificateRecords: {
-    command: (ci = false) => {
+    command: () => {
       const [ stackname ] = arguments(["stackname"]);
-      let { profile, vars } = factory(grunt, stackname);
+      let { ci, profile, vars } = factory(grunt, stackname);
 
       if (!ci) {
         vars = `AWS_PROFILE=${profile} ${vars}`;
@@ -85,9 +84,9 @@ module.exports = (grunt) => ({
   },
   "cdk-deploy": {
     options,
-    command: (ci = false) => {
-      const [ stackname ] = arguments(["stackname"]);
-      let { bin, environment, profile, stack, vars } = factory(grunt, stackname);
+    command: (target = false) => {
+      const [ stackname ] = target ? [target] : arguments(["stackname"]);
+      let { bin, ci, environment, profile, stack, vars } = factory(grunt, stackname);
 
       if (!ci) {
         vars = `AWS_PROFILE=${profile} ${vars}`;
@@ -96,18 +95,18 @@ module.exports = (grunt) => ({
       let command = `${vars} npx ${bin} deploy --require-approval never ${stack}`;
 
       if (environment === "local") {
-        command = `--outputs-file output/${stack}.json ${command}`;
+        command = `${command} --outputs-file output/${stack}.json`;
       }
 
-      grunt.log.oklns(`Deploying: ${stackname}`);
+      grunt.log.oklns(command);
       return debug(command);
     },
   },
   "cdk-destroy": {
     options,
-    command: (ci = false) => {
+    command: () => {
       const [ stackname ] = arguments(["stackname"]);
-      let { bin, profile, stack, vars } = factory(grunt, stackname);
+      let { bin, ci, profile, stack, vars } = factory(grunt, stackname);
 
       if (!ci) {
         vars = `AWS_PROFILE=${profile} ${vars}`;
@@ -140,8 +139,8 @@ module.exports = (grunt) => ({
     },
   },
   getSSMRecord: {
-    command: (ci = false) => {
-      const { profile } = factory(grunt);
+    command: () => {
+      const { ci, profile } = factory(grunt);
       const [ path, region ] = arguments(["path", "region"]);
       let vars = `CDK_REGION=${region} SSM_PATH=${path}`;
 

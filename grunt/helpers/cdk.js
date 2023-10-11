@@ -8,6 +8,7 @@ module.exports = () => {
 
   return {
     bin: local ? "cdklocal" : "cdk",
+    ci: grunt.option("ci"),
     environment,
     local,
     profile: profile || `${package.name}-${environment}`,

@@ -23,6 +23,13 @@
   "homepage": "https://github.com/listenrightmeow/smaaash#readme",
   "devDependencies": {
     "@types/node": "^20.6.3",
-    "aws-cdk": "^2.99.1"
+    "aws-cdk": "^2.99.1",
+    "aws-cdk-local": "^2.18.0",
+    "dotenv": "^16.3.1",
+    "grunt-cli": "^1.4.3",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-shell": "^4.0.0",
+    "load-grunt-config": "^4.0.1"
   }
 }

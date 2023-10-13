@@ -30,6 +30,10 @@
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-shell": "^4.0.0",
-    "load-grunt-config": "^4.0.1"
+    "load-grunt-config": "^4.0.1",
+    "serverless-localstack": "^1.1.2"
+  },
+  "dependencies": {
+    "serverless": "^3.35.2"
   }
 }

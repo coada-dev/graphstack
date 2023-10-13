@@ -1,6 +1,7 @@
 # CDK
 !jest.config.js
 ./*.d.ts
+cdk/cdk.json
 
 # CDK asset staging directory
 .cdk.staging

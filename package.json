@@ -31,7 +31,10 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-shell": "^4.0.0",
     "load-grunt-config": "^4.0.1",
-    "serverless-localstack": "^1.1.2"
+    "serverless-localstack": "^1.1.2",
+    "serverless-offline": "^13.2.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "serverless": "^3.35.2"

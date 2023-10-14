@@ -12,9 +12,10 @@ export default class SecurityStack extends NestedStack {
 
   constructor(
     scope: Construct,
+    label: string,
     props: SecurityGroupProps,
   ) {
-    super(scope, namespace, props);
+    super(scope, `${namespace}-${label}`, props);
 
     this.sg = new SecurityGroup(this, namespace, props);
   }

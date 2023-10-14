@@ -60,7 +60,7 @@ describe(service, () => {
       ],
     }, vpcFlowLogStorage);
 
-    const stack = new SecurityStack(wrapper, { vpc });
+    const stack = new SecurityStack(wrapper, "rule", { vpc });
 
     stack.sg.connections.allowFrom(Peer.anyIpv4(), Port.tcp(443));
 

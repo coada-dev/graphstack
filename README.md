@@ -95,3 +95,11 @@ npx grunt local
 ```
 
 If you'd like to modify or configure a new stack for deployment, declare execution within `grunt/aliases.json` under the `local` task alias. Make sure a complimentary configuration node exists within the `grunt/cdk.js` task file that matches the alias you have already created.
+
+## Wallaby
+
+### VSCode
+
+Open command pallette: `control + command + p`, select `Wallaby.js: Select Configuration File`, `Automatic Configuration <custom director>`, and select the project that you want to run WallabyJS for. Each project is going to require a `wallaby.js` configuration file.
+
+Wallaby does not load nested `tsconfig.json` files. Any typescript configuration for a project within this monorepo needs to be replicated in your project directory if your test runner, e.g. Jest, is not configured for it.

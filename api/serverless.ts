@@ -92,7 +92,7 @@ const serverlessConfiguration: AWS = {
       production: true,
     },
     vpc: {
-      
+
     }
   },
 };

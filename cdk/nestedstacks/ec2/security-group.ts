@@ -7,7 +7,7 @@ import { branch } from "#helpers/configuration.ts";
 
 const namespace = `${branch}-security-group`;
 
-export default class SecurityStack extends NestedStack {
+export default class SecurityGroupStack extends NestedStack {
   public readonly sg: SecurityGroup;
 
   constructor(

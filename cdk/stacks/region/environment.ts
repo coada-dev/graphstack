@@ -6,9 +6,7 @@ import { Construct } from "constructs";
 import { formatCDKLogicalID } from "#helpers/cdk.ts";
 import { environment, fqdn, region } from "#helpers/configuration.ts";
 import { isLocal, isProd } from "#helpers/environment.ts";
-import handleOutputs from "#helpers/outputs.ts";
 
-import SecurityStack from "#nestedstacks/ec2/security-group.ts";
 import VpcStack from "#nestedstacks/ec2/vpc.ts";
 import DNSStack from "#nestedstacks/r53/domain.ts";
 import SubDNSStack from "#nestedstacks/r53/subDomain.ts";
@@ -81,21 +79,5 @@ export default class EnvironmentStack extends Stack {
         },
       ],
     });
-
-    const apiGWSecurityGroup = new SecurityStack(this, "apiGWDefault", {
-      vpc,
-    });
-
-    apiGWSecurityGroup.sg.connections.allowFrom(Peer.anyIpv4(), Port.tcp(443));
-    handleOutputs(
-      this,
-      {
-        label: "apiGWDefaultID",
-        region,
-        service: "ec2/sg",
-      },
-      apiGWSecurityGroup.sg.securityGroupId,
-    );
-
   }
 }

@@ -4,8 +4,8 @@
 cdk/cdk.json
 
 # CDK asset staging directory
-.cdk.staging
-cdk.out
+cdk/.cdk.staging
+cdk/cdk.out
 
 # Jest
 coverage

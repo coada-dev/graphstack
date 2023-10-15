@@ -62,6 +62,9 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
+    localstack: {
+      stages: ['local'],
+    },
     tags: {
       local: {
         _custom_id_: 'local',

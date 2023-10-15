@@ -32,7 +32,7 @@ export default class VPCSecurityStack extends Stack {
 
   getVPC(): IVpc {
     const vpcId = process.env.CDK_VPC_ID
-      || StringParameter.valueFromLookup(this, `/vpc/${branch}-vpcId`);
+      || StringParameter.valueFromLookup(this, "/vpc/vpcId");
 
     return Vpc.fromLookup(this, "vpc", { vpcId });
   }

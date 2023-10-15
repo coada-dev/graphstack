@@ -92,7 +92,12 @@ const serverlessConfiguration: AWS = {
       production: true,
     },
     vpc: {
-
+      securityGroupIds: [
+        '${ssm:/ec2/sg/apiGWSecurityGroupID}'
+      ],
+      subnetIds: [
+        '{split(${ssm:/vpc/vpcPrivateSubnets}, ",")}'
+      ]
     }
   },
 };

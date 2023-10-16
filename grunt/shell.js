@@ -175,4 +175,12 @@ module.exports = (grunt) => ({
       },
     },
   },
+  "serverless": {
+    command: (command) => {
+      const { environment } = cdk();
+      const region = grunt.option("region") || "us-west-2";
+
+      return `npx serverless ${command} --stage ${environment} --region ${region}`;
+    },
+  },
 });

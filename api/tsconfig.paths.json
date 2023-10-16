@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@cdk/*": ["../cdk/*"],
       "@functions/*": ["src/functions/*"],
       "@libs/*": ["src/libs/*"]
     }

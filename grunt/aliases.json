@@ -21,6 +21,8 @@
     "stack:security"
   ],
   "pre-cdk": ["environment", "dotenv", "branch"],
+  "sls:deploy": ["environment", "branch", "shell:serverless:deploy"],
+  "sls:remove": ["environment", "branch", "shell:serverless:remove"],
   "stack:environment": ["cdk:environment", "shell:cdk-bootstrap", "shell:cdk-deploy:environment"],
   "stack:security": ["cdk:security", "shell:cdk-bootstrap", "shell:cdk-deploy:security"],
   "synth": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-synth"]

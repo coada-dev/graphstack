@@ -1,20 +1,21 @@
 import type { AWS } from '@serverless/typescript';
 
+import { getBranch } from '@cdk/helpers/branch';
 import hello from '@functions/hello';
 
 const serverlessConfiguration: AWS = {
-  service: 'api',
+  service: `${getBranch()}-api`,
   frameworkVersion: '3',
   plugins: [
     'serverless-esbuild',
     'serverless-localstack',
+    'serverless-offline',
   ],
   provider: {
     name: 'aws',
     stage: '${opt:stage, "local"}',
     region: '${opt:region, "us-west-2"}' as "us-west-2",
     runtime: 'nodejs18.x',
-    versionFunctions: '${self:custom.versionFunctions.${self:provider.stage}, self:custom.versionFunctions.local}' as unknown as boolean,
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -31,6 +32,65 @@ const serverlessConfiguration: AWS = {
     iam: {
       role: {
         statements: [
+          {
+            Effect: 'Allow',
+            Action: [
+              'dynamodb:BatchGet*',
+              'dynamodb:BratchWrite*',
+              'dynamodb:Delete*',
+              'dynamodb:DescribeStream',
+              'dynamodb:DescribeTable',
+              'dynamodb:Get*',
+              'dynamodb:List*',
+              'dynamodb:Put*',
+              'dynamodb:Query',
+              'dynamodb:Scan',
+              'dynamodb:Update*',
+            ],
+            Resource: '*',
+          },
+          {
+            Effect: 'Allow',
+            Action: [
+              'kms:decrypt',
+            ],
+            Resource: '*',
+          },
+          {
+            Effect: 'Allow',
+            Action: [
+              'sns:Publish',
+            ],
+            Resource: '*',
+          },
+          {
+            Effect: 'Allow',
+            Action: [
+              'sqs:GetQueueAttributes',
+              'sqs:GetQueueUrl',
+              'sqs:ListDeadLetterSourceQueues',
+              'sqs:ListQueues',
+              'sqs:ReceiveMessage',
+              'sqs:SendMessage',
+              'sqs:SendMessageBatch',
+            ],
+            Resource: {
+              'Fn::Sub': 'arn:aws:sqs:${self:provider.region}:${AWS::AccountId}:*'
+            },
+          },
+          {
+            Effect: 'Allow',
+            Action: [
+              'ssm:DescribeParameters',
+              'ssm:GetParameter',
+              'ssm:GetParameters',
+              'ssm:GetParametersByPath',
+              'ssm:ListTagsForResource',
+            ],
+            Resource: {
+              'Fn::Sub': 'arn:aws:ssm:*:${AWS::AccountId}:parameter/*'
+            },
+          },
           {
             Effect: 'Allow',
             Action: [
@@ -63,8 +123,15 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
     localstack: {
+      autostart: true,
+      debug: true,
+      lambda: {
+        mountCode: true,
+      },
+      networks: ['ls'],
       stages: ['local'],
     },
+    stage: '${self:provider.stage}',
     tags: {
       local: {
         _custom_id_: 'local',
@@ -86,13 +153,6 @@ const serverlessConfiguration: AWS = {
     tracing: {
       apiGateway: true,
       lambda: true,
-    },
-    versionFunctions: {
-      local: false,
-      development: true,
-      test: true,
-      staging: true,
-      production: true,
     },
     vpc: {
       securityGroupIds: [

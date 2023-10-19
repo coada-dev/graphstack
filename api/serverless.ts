@@ -131,6 +131,9 @@ const serverlessConfiguration: AWS = {
       networks: ['ls'],
       stages: ['local'],
     },
+    offline: {
+      useChildProcesses: true,
+    },
     stage: '${self:provider.stage}',
     tags: {
       local: {

@@ -19,7 +19,6 @@
     "@types/node": "^14.18.63",
     "esbuild": "^0.14.54",
     "json-schema-to-ts": "^1.6.5",
-    "nodemon": "^3.0.1",
     "serverless": "^3.35.2",
     "serverless-esbuild": "^1.48.5",
     "serverless-localstack": "^1.1.2",
@@ -28,6 +27,6 @@
     "tsconfig-paths": "^3.14.2",
     "typescript": "^4.9.5"
   },
-  "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
+  "author": "listenrightmeow",
   "license": "MIT"
 }

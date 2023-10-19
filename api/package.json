@@ -4,6 +4,8 @@
   "description": "smaaash SLS Typescript GraphQL API",
   "main": "serverless.ts",
   "scripts": {
+    "deploy:local": "LAMBDA_MOUNT_CWD=$(pwd)/.esbuild/.build/src/functions/hello sls deploy",
+    "offline": "sls offline --reloadHandler",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {

@@ -100,6 +100,6 @@ If you'd like to modify or configure a new stack for deployment, declare executi
 
 ### VSCode
 
-Open command pallette: `control + command + p`, select `Wallaby.js: Select Configuration File`, `Automatic Configuration <custom director>`, and select the project that you want to run WallabyJS for. Each project is going to require a `wallaby.js` configuration file.
+Open command pallette: `control + command + p`, select `Wallaby.js: Select Configuration File`, `Automatic Configuration <custom directory>`, and select the project that you want to run WallabyJS for. Each project is going to require a `wallaby.js` configuration file.
 
 Wallaby does not load nested `tsconfig.json` files. Any typescript configuration for a project within this monorepo needs to be replicated in your project directory if your test runner, e.g. Jest, is not configured for it.

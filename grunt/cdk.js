@@ -8,6 +8,11 @@ module.exports = {
     stack: "environment",
     template: "cdk.template.json",
   },
+  "schema-user": {
+    output: "cdk.json",
+    stack: "schema/user",
+    template: "cdk.template.json",
+  },
   security: {
     output: "cdk.json",
     stack: "security",

@@ -9,21 +9,19 @@ import {
 
 import { Construct } from "constructs";
 
-import { branch, environment } from "#helpers/configuration.ts";
-import { Environment } from "#helpers/environment.ts";
+import { branch, environment, region } from "#helpers/configuration.ts";
+import { isProd } from "#helpers/environment.ts";
+import handleOutputs from "#helpers/outputs.ts";
 
-/* istanbul ignore next */
 export default class DynamoStack extends NestedStack {
-  private isProduction: boolean =
-    Environment[environment as keyof typeof Environment] ===
-    Environment.production;
+  private isProduction: boolean = isProd(environment);
 
   public readonly table: Table;
 
   constructor(scope: Construct, tableProps: TableProps) {
-    super(scope, branch, {});
+    super(scope, branch, tableProps);
 
-    this.table = new Table(this, `${branch}-table`, tableProps);
+    this.table = new Table(this, `${branch}-${tableProps.tableName}`, tableProps);
 
     if (tableProps.billingMode === BillingMode.PROVISIONED) {
       this.autoScaling(tableProps);
@@ -31,6 +29,16 @@ export default class DynamoStack extends NestedStack {
     }
 
     this.removalPolicy(tableProps);
+
+    handleOutputs(
+      this,
+      {
+        label: `${branch}-${tableProps.tableName}`,
+        region,
+        service: "ddb",
+      },
+      this.table.tableName,
+    );
   }
 
   autoScaling(tableProps: TableProps) {

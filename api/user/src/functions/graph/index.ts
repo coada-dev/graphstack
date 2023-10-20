@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'hello',
+        path: 'graphql',
         request: {
           schemas: {
             'application/json': schema,

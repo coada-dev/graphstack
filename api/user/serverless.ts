@@ -1,7 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import { getBranch } from '@cdk/helpers/branch';
-import hello from '@functions/hello';
+import graph from '@functions/graph';
 
 const serverlessConfiguration: AWS = {
   service: `${getBranch()}-api`,
@@ -109,7 +109,7 @@ const serverlessConfiguration: AWS = {
     tags: '${self:custom.tags.${self:provider.stage}, self:custom.tags.local}' as unknown as Record<string, string>,
   },
   // import the function via paths
-  functions: { hello },
+  functions: { graph },
   package: { individually: true },
   custom: {
     esbuild: {

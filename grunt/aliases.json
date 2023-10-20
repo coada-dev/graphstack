@@ -19,9 +19,10 @@
     "clean:local",
     "stack:environment",
     "stack:security",
-    "stack:schema-user"
+    "stack:schema-user",
+    "timer"
   ],
-  "pre-cdk": ["environment", "dotenv", "branch"],
+  "pre-cdk": ["timer", "environment", "dotenv", "branch"],
   "stack:environment": ["cdk:environment", "shell:cdk-bootstrap", "shell:cdk-deploy:environment"],
   "stack:schema-user": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user"],
   "stack:security": ["cdk:security", "shell:cdk-bootstrap", "shell:cdk-deploy:security"],

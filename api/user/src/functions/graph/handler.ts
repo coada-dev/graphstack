@@ -5,6 +5,8 @@ import { ApolloServerPluginInlineTrace } from '@apollo/server/plugin/inlineTrace
 import { buildSubgraphSchema } from "@apollo/subgraph";
 import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda';
 
+import { Environment, getEnvironment, isProd } from '@cdk/helpers/environment';
+
 // NOTE: Users
 import UsersDataSource from '@models/users';
 import UsersTypeDefs from '@schemas/users';
@@ -16,8 +18,11 @@ export interface Context {
   }
 }
 
+const environment = getEnvironment(Environment[process.env.NODE_ENV as keyof typeof Environment]);
+const isProduction = isProd(environment);
+
 const server = new ApolloServer<Context>({
-  introspection: true,
+  introspection: !isProduction,
   plugins: [ApolloServerPluginInlineTrace()],
   schema: buildSubgraphSchema([
     {

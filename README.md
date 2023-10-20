@@ -1,12 +1,13 @@
-# smaaash
+# GraphStack
 
 ## Description
 
-A smarter, funnier, more efficient Discord bot designed to integrate with your Twitch channel. Administrate user management, goals, cheers, scams with smaaash.
+An opinionated monorepo for building a Typescript Serverless GraphQL Subgraph. This project will get an AWS-replica of a Serverless Apollo Server (v4) running on your host machine through LocalStack + AWS CDK. The overall goal of this project is to maximize environment parity from local development to production.
 
 ## Installation
 
 ```
+brew install docker
 brew install asdf
 asdf plugin-add nodejs
 asdf plugin-add python
@@ -26,13 +27,13 @@ pip install -r requirements.txt
 Configure a local environment project profile within your AWS configuration file inside your `.aws` home directory. Configure how you'd like, but make sure not to override credential process and make sure you don't define an account number!
 
 ```
-[profile smaaash-local]
+[profile graphstack-local]
 region = us-west-2
 output = json
 ```
 
 ```
-[profile smaaash-local]
+[profile graphstack-local]
 source_profile = default
 ```
 
@@ -50,7 +51,7 @@ Setup a profile for your project. Set the profile argument as the name of your p
 aws sso login --profile <profile>
 ```
 
-Grunt will automatically pull the project name out of the root `package.json` within this repository and append the environment to that project name when executing CDK, e.g,. `smaaash-development`. To get a list of valid environments, view `cdk/helpers/environments`. To override, provide a `--profile` arg with the name of your AWS profile at runtime.
+Grunt will automatically pull the project name out of the root `package.json` within this repository and append the environment to that project name when executing CDK, e.g,. `graphstack-development`. To get a list of valid environments, view `cdk/helpers/environments`. To override, provide a `--profile` arg with the name of your AWS profile at runtime.
 
 ### CDK Applications
 

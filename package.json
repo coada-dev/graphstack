@@ -1,26 +1,29 @@
 {
-  "name": "smaaash",
+  "name": "graphstack",
   "version": "0.1.0",
-  "description": "a_n_i_v is a dumbfuck",
+  "description": "Deploy an Typescript Apollo Subgraph to your host machine, with maximum parity to an AWS environment, on your host machine in under 2 minutes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/listenrightmeow/smaaash.git"
+    "url": "git+https://github.com/coada-dev/graphstack.git"
   },
   "keywords": [
-    "discord",
-    "smaaash",
-    "twitch"
+    "apollo",
+    "cdk",
+    "federation",
+    "graphstack",
+    "localstack",
+    "subgraph"
   ],
   "author": "listenrightmeow",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/listenrightmeow/smaaash/issues"
+    "url": "https://github.com/coada-dev/graphstack/issues"
   },
-  "homepage": "https://github.com/listenrightmeow/smaaash#readme",
+  "homepage": "https://github.com/coada-dev/graphstack#readme",
   "devDependencies": {
     "@types/node": "^20.6.3",
     "aws-cdk": "^2.99.1",

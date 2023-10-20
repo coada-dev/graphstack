@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "smaaash SLS Typescript GraphQL API",
+  "description": "graphstack SLS Typescript GraphQL API",
   "main": "serverless.ts",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",

@@ -1,7 +1,7 @@
 {
   "name": "graphstack",
   "version": "0.1.0",
-  "description": "Deploy an Typescript Apollo Subgraph to your host machine, with maximum parity to an AWS environment, on your host machine in under 2 minutes.",
+  "description": "Deploy a Typescript Apollo Subgraph to your host machine, with maximum parity to an AWS environment, on your host machine in under 2 minutes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,12 +34,6 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-shell": "^4.0.0",
     "load-grunt-config": "^4.0.1",
-    "serverless-localstack": "^1.1.2",
-    "serverless-offline": "^13.2.0",
-    "serverless-plugin-typescript": "^2.1.5",
     "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "serverless": "^3.35.2"
   }
 }

@@ -4,6 +4,8 @@
 
 An opinionated monorepo for building a Typescript Serverless GraphQL Subgraph. This project will get an AWS-replica of a Serverless Apollo Server (v4) running on your host machine through LocalStack + AWS CDK. The overall goal of this project is to maximize environment parity from local development to production.
 
+This repository uses LocalStack Pro for stacks like Cognito. If Pro services are not needed, feel free to modify the `docker-compose` image path to use the community version.
+
 ## Installation
 
 ```
@@ -35,6 +37,39 @@ output = json
 ```
 [profile graphstack-local]
 source_profile = default
+```
+
+## tl;dr
+
+Complete installation instructions first. It's suggested that for every code block below in this section, that you execute each code block in its own terminal window. Each command will have its own unique output, this is certainly true for `docker-compose` and the log tail it captures for your LocalStack environment.
+
+From the root of the repository, execute the following commands to start your LocalStack environment:
+
+```
+docker-compose up
+```
+
+From `cdk/`, execute the following commands to deploy your CDK stacks to LocalStack environment:
+
+```
+asdf reshim nodejs
+npx grunt local
+```
+
+From `api/user`, execute the following commands to start your Apollo Server Subraph inside your LocalStack environment:
+
+```
+asdf reshim nodejs
+npm run localstack
+```
+
+From `api/user`, execute the following commands to start Serverless Offline and `watch` on your api:
+
+`watch` will deploy your API to LocalStack and restart your API when changes are detected through `hot-loading`.
+
+```
+asdf reshim nodejs
+npm run offline
 ```
 
 ## Automation

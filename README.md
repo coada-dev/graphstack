@@ -93,7 +93,7 @@ Grunt will automatically pull the project name out of the root `package.json` wi
 
 ### CDK Applications
 
-There are no default applications within the CDK scope. You need to explicitly define the application stack that you are attempting to deploy. You can deploy with CDK directly, but there are many benefits to using Grunt as a wrapper in this application.
+There are no default applications within the CDK scope. You need to explicitly define the application stack that you are attempting to deploy. You can deploy with CDK directly, but there are many benefits to using Grunt as a wrapper in this application. Utilizing CDK directly will require creation of a `cdk.json` file with an app node defined in the root of the `cdk/` directory. This approach is anti-pattern to the monorepo approach that this project is taking.
 
 ```
 npx grunt deploy --account <account> --app=<app> --environment=<environment> --region=<region> --stackname=<stackname>
@@ -102,7 +102,7 @@ npx grunt deploy --account <account> --app=<app> --environment=<environment> --r
 `--app` is an argument for an application stack within the `cdk/bin/` directory. The environment and region arguments are passed down through the application at execution. The account application stack has a hard-coded region, with reason, while other application stacks like environment are dynamic.
 
 ```
-npx grunt deploy --account=000000000000 --app=account --environment√development --region=us-west-2 --stackname=oidc
+npx grunt deploy --account=000000000000 --app=account --environment=development --region=us-west-2 --stackname=oidc
 ```
 
 The above command will achieve the following:
@@ -110,10 +110,12 @@ The above command will achieve the following:
 - deploy the `oidc` stack as a decendent of the `account` application stack
     - this will affect the naming convention of the stack and logical identifiers for your applications in AWS
 - deploys to the `development` environment in `us-west-2`
-- all stacks are prefixed with `development-`
+- all stacks are prefixed with your branch name, e.g, `development-`
+    - this easily allows for custom feature-based CI workflows
 - stacks can easily be deployed to other environments, e.g., `staging`, `production`, etc.
     - stacks can also be deployed to any region, e.g., `us-east-1`, `us-west-2`, etc.
     - wildcards can be used for Grunt deployments with `--stackname *`, which will deploy all stacks within an application, but logical identifiers will not conform to the naming convention used when a stackname is physically defined
+        - this will be an issue if services like Serverless are consuming SSM parameters from CDK stacks
 - all applications define account numbers and regions to allow multi-account, and multi-region deployments when `crossRegionReferences` is defined within the application stack
     - this will be required for cross-account, cross-region, dependencies like ACM in `us-east-1` for CloudFront deployments
 

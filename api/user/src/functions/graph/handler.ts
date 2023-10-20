@@ -1,4 +1,3 @@
-// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import { ApolloServer } from '@apollo/server';
@@ -10,8 +9,6 @@ import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aw
 import UsersDataSource from '@models/users';
 import UsersTypeDefs from '@schemas/users';
 import UsersResolvers from '@resolvers/users';
-
-// import RequestSchema from '@functions/graph/schema';
 
 export interface Context {
   dataSources: {
@@ -40,12 +37,3 @@ const serverHandler = startServerAndCreateLambdaHandler(server, requestHandler, 
 });
 
 export default middyfy(serverHandler);
-
-// const api: ValidatedEventAPIGatewayProxyEvent<typeof RequestSchema> = async (event) => {
-//   return formatJSONResponse({
-//     message: `Hello ${event.body.name}, welcome to the exciting Serverless world!`,
-//     event,
-//   });
-// };
-
-// export const main = middyfy(api);

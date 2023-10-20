@@ -3,8 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "@cdk/*": ["../../cdk/*"],
+      "@datasources/*": ["src/datasources/*"],
       "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"]
+      "@libs/*": ["src/libs/*"],
+      "@models/*": ["src/models/*"],
+      "@resolvers/*": ["src/resolvers/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@types/*": ["src/types/*"],
     }
   }
 }

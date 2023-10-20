@@ -1,19 +1,19 @@
-import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
 
 export default {
-  handler: `${handlerPath(__dirname)}/handler.main`,
+  handler: `${handlerPath(__dirname)}/handler.default`,
   events: [
     {
       http: {
         method: 'post',
-        path: 'graphql',
-        request: {
-          schemas: {
-            'application/json': schema,
-          },
-        },
+        path: 'graphql'
       },
     },
+    {
+      http: {
+        method: 'get',
+        path: 'graphql'
+      },
+    }
   ],
 };

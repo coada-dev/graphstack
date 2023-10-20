@@ -108,7 +108,6 @@ const serverlessConfiguration: AWS = {
     logRetentionInDays: 60,
     tags: '${self:custom.tags.${self:provider.stage}, self:custom.tags.local}' as unknown as Record<string, string>,
   },
-  // import the function via paths
   functions: { graph },
   package: { individually: true },
   custom: {
@@ -133,6 +132,9 @@ const serverlessConfiguration: AWS = {
     },
     offline: {
       useChildProcesses: true,
+    },
+    "serverless-offline": {
+      noPrependStageInUrl: true,
     },
     stage: '${self:provider.stage}',
     tags: {

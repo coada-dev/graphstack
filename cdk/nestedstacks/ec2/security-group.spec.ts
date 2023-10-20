@@ -10,7 +10,7 @@ import {
 } from "aws-cdk-lib/aws-ec2";
 
 import VpcStack from "#nestedstacks/ec2/vpc.ts";
-import SecurityStack from "#nestedstacks/ec2/security-group.ts";
+import SecurityGroupStack from "#nestedstacks/ec2/security-group.ts";
 import S3Stack from "#nestedstacks/s3/bucket.ts";
 
 const service = "vpcSecurityGroups";
@@ -60,7 +60,7 @@ describe(service, () => {
       ],
     }, vpcFlowLogStorage);
 
-    const stack = new SecurityStack(wrapper, { vpc });
+    const stack = new SecurityGroupStack(wrapper, "rule", { vpc });
 
     stack.sg.connections.allowFrom(Peer.anyIpv4(), Port.tcp(443));
 

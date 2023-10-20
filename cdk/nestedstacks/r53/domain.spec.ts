@@ -1,11 +1,12 @@
 import { App, Stack } from "aws-cdk-lib";
 import { Match, Template } from "aws-cdk-lib/assertions";
 
+import { formatCDKLogicalID } from "#helpers/cdk.ts";
 import { branch, environment, fqdn } from "#helpers/configuration.ts";
 import DNSStack from "#nestedstacks/r53/domain.ts";
 
 const service = "r53/domain";
-const formattedFQDN = fqdn.replace(/\./g, "-");
+const formattedFQDN = formatCDKLogicalID(fqdn);
 
 describe(service, () => {
   let stack: Stack;
@@ -16,6 +17,7 @@ describe(service, () => {
     const wrapper = new Stack(app);
     const s = new DNSStack(
       wrapper,
+      formattedFQDN,
       {
         comment: environment,
         zoneName: fqdn,

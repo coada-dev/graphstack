@@ -1,12 +1,13 @@
-# smaaash
+# GraphStack
 
 ## Description
 
-A smarter, funnier, more efficient Discord bot designed to integrate with your Twitch channel. Administrate user management, goals, cheers, scams with smaaash.
+An opinionated monorepo for building a Typescript Serverless GraphQL Subgraph. This project will get an AWS-replica of a Serverless Apollo Server (v4) running on your host machine through LocalStack + AWS CDK. The overall goal of this project is to maximize environment parity from local development to production.
 
 ## Installation
 
 ```
+brew install docker
 brew install asdf
 asdf plugin-add nodejs
 asdf plugin-add python
@@ -23,6 +24,19 @@ npm i
 pip install -r requirements.txt
 ```
 
+Configure a local environment project profile within your AWS configuration file inside your `.aws` home directory. Configure how you'd like, but make sure not to override credential process and make sure you don't define an account number!
+
+```
+[profile graphstack-local]
+region = us-west-2
+output = json
+```
+
+```
+[profile graphstack-local]
+source_profile = default
+```
+
 ## Automation
 
 tl;dr Grunt automates every contact point with any command line interface that this project touches. Feel free to use the CLI directly, but Grunt is the preferred method of interacting with this project.
@@ -37,20 +51,20 @@ Setup a profile for your project. Set the profile argument as the name of your p
 aws sso login --profile <profile>
 ```
 
-Grunt will automatically pull the project name out of the root `package.json` within this repository and append the environment to that project name when executing CDK, e.g,. `smaaash-development`. To get a list of valid environments, view `cdk/helpers/environments`. To override, provide a `--profile` arg with the name of your AWS profile at runtime.
+Grunt will automatically pull the project name out of the root `package.json` within this repository and append the environment to that project name when executing CDK, e.g,. `graphstack-development`. To get a list of valid environments, view `cdk/helpers/environments`. To override, provide a `--profile` arg with the name of your AWS profile at runtime.
 
 ### CDK Applications
 
 There are no default applications within the CDK scope. You need to explicitly define the application stack that you are attempting to deploy. You can deploy with CDK directly, but there are many benefits to using Grunt as a wrapper in this application.
 
 ```
-npx grunt deploy --account <account> --app <app> --environment <environment> --region <region> --stackname <stackname>
+npx grunt deploy --account <account> --app=<app> --environment=<environment> --region=<region> --stackname=<stackname>
 ```
 
 `--app` is an argument for an application stack within the `cdk/bin/` directory. The environment and region arguments are passed down through the application at execution. The account application stack has a hard-coded region, with reason, while other application stacks like environment are dynamic.
 
 ```
-npx grunt deploy --account 000000000000 --app account --environment development --region us-west-2 --stackname oidc
+npx grunt deploy --account=000000000000 --app=account --environment√development --region=us-west-2 --stackname=oidc
 ```
 
 The above command will achieve the following:
@@ -70,5 +84,23 @@ The above command will achieve the following:
 CDK account numbers default to `000000000000`. This is a valid account number for LocalStack deployments. The deployment process to LocalStack is identical to AWS, but the account number is not required.
 
 ```
-npx grunt deploy --app environment --stackname environment
+npx grunt deploy --app=environment --stackname=environment
 ```
+
+## Local Deployment
+
+tl:dr;
+
+```
+npx grunt local
+```
+
+If you'd like to modify or configure a new stack for deployment, declare execution within `grunt/aliases.json` under the `local` task alias. Make sure a complimentary configuration node exists within the `grunt/cdk.js` task file that matches the alias you have already created.
+
+## Wallaby
+
+### VSCode
+
+Open command pallette: `control + command + p`, select `Wallaby.js: Select Configuration File`, `Automatic Configuration <custom directory>`, and select the project that you want to run WallabyJS for. Each project is going to require a `wallaby.js` configuration file.
+
+Wallaby does not load nested `tsconfig.json` files. Any typescript configuration for a project within this monorepo needs to be replicated in your project directory if your test runner, e.g. Jest, is not configured for it.

@@ -1,8 +1,11 @@
+process.env.CDK_ENVIRONMENT = "local";
+
 module.exports = {
-  testEnvironment: 'node',
-  roots: ['<rootDir>/test'],
-  testMatch: ['**/*.test.ts'],
+  displayName: "CDK",
+  roots: ["<rootDir>"],
+  testEnvironment: "node",
+  testMatch: ["**/*.spec.ts"],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
-  }
+    "^.+\\.tsx?$": "ts-jest",
+  },
 };

@@ -1,28 +1,45 @@
 {
-  "name": "smaaash",
+  "name": "graphstack",
   "version": "0.1.0",
-  "description": "a_n_i_v is a dumbfuck",
+  "description": "Deploy an Typescript Apollo Subgraph to your host machine, with maximum parity to an AWS environment, on your host machine in under 2 minutes.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/listenrightmeow/smaaash.git"
+    "url": "git+https://github.com/coada-dev/graphstack.git"
   },
   "keywords": [
-    "discord",
-    "smaaash",
-    "twitch"
+    "apollo",
+    "cdk",
+    "federation",
+    "graphstack",
+    "localstack",
+    "subgraph"
   ],
   "author": "listenrightmeow",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/listenrightmeow/smaaash/issues"
+    "url": "https://github.com/coada-dev/graphstack/issues"
   },
-  "homepage": "https://github.com/listenrightmeow/smaaash#readme",
+  "homepage": "https://github.com/coada-dev/graphstack#readme",
   "devDependencies": {
     "@types/node": "^20.6.3",
-    "aws-cdk": "^2.99.1"
+    "aws-cdk": "^2.99.1",
+    "aws-cdk-local": "^2.18.0",
+    "dotenv": "^16.3.1",
+    "grunt-cli": "^1.4.3",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-shell": "^4.0.0",
+    "load-grunt-config": "^4.0.1",
+    "serverless-localstack": "^1.1.2",
+    "serverless-offline": "^13.2.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "serverless": "^3.35.2"
   }
 }

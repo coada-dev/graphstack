@@ -7,7 +7,7 @@ module.exports = (grunt) => {
       execSync("git rev-parse --abbrev-ref HEAD")
         .toString("utf8")
         .replace(/[\n\r\s]+$/, "");
-    branch = branch.toLowerCase();
+    branch = branch.toLowerCase().trim();
     grunt.log.oklns(`Branch: ${branch}`);
     grunt.config.set("branch", branch);
   });

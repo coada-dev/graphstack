@@ -94,7 +94,7 @@ export default class VpcStack extends NestedStack {
     );
     handleOutputs(
       this,
-      { label: `${branch}-vpcId`, region, service: "vpc" },
+      { label: "vpcId", region, service: "vpc" },
       this.vpc.vpcId,
     );
   }

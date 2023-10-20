@@ -12,8 +12,9 @@ import { Environment } from "#helpers/environment.ts";
 import { getRegions } from "#helpers/region.ts";
 import DynamoStack from "./table";
 
-const service = "dynamodb";
 const replicationRegions = getRegions(environment);
+const service = "dynamodb";
+const tableName = "foo";
 
 describe(service, () => {
   let stack: Stack;
@@ -33,6 +34,7 @@ describe(service, () => {
       },
       replicationRegions,
       stream: StreamViewType.NEW_AND_OLD_IMAGES,
+      tableName,
     });
 
     stack = t;
@@ -120,7 +122,7 @@ describe(service, () => {
   });
 
   it(`${service} Substack validation`, () => {
-    expect(table.node.id).toEqual(`${branch}-table`);
+    expect(table.node.id).toEqual(`${branch}-${tableName}`);
   });
 });
 

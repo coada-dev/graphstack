@@ -3,7 +3,7 @@ import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
 
 import { account, branch, region } from "#helpers/configuration.ts";
-import EnvironmentStack from "../stacks/region/environment";
+import EnvironmentStack from "#stacks/region/environment.ts";
 
 const app = new cdk.App();
 

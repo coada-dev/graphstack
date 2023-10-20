@@ -1,11 +1,12 @@
 import { Stack, StackProps } from "aws-cdk-lib";
-import { GatewayVpcEndpointAwsService, IpAddresses, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { GatewayVpcEndpointAwsService, IpAddresses, Peer, Port, SubnetType } from "aws-cdk-lib/aws-ec2";
 import { EmailIdentity, Identity } from "aws-cdk-lib/aws-ses";
 import { Construct } from "constructs";
 
 import { formatCDKLogicalID } from "#helpers/cdk.ts";
-import { environment, fqdn } from "#helpers/configuration.ts";
-import { isProd } from "#helpers/environment.ts";
+import { environment, fqdn, region } from "#helpers/configuration.ts";
+import { isLocal, isProd } from "#helpers/environment.ts";
+
 import VpcStack from "#nestedstacks/ec2/vpc.ts";
 import DNSStack from "#nestedstacks/r53/domain.ts";
 import SubDNSStack from "#nestedstacks/r53/subDomain.ts";
@@ -35,11 +36,14 @@ export default class EnvironmentStack extends Stack {
     );
     mailSubdomain.node.addDependency(primarySubdomain);
 
-    const ses = new EmailIdentity(this, "ses-identity", {
-      identity: Identity.publicHostedZone(primarySubdomain),
-      mailFromDomain: `mail.${fqdn}`,
-    });
-    ses.node.addDependency(mailSubdomain);
+    // NOTE: https://docs.localstack.cloud/references/coverage/coverage_ses/
+    if (!isLocal(environment)) {
+      const ses = new EmailIdentity(this, "ses-identity", {
+        identity: Identity.publicHostedZone(primarySubdomain),
+        mailFromDomain: `mail.${fqdn}`,
+      });
+      ses.node.addDependency(mailSubdomain);
+    }
 
     const { vpc }: VpcStack = new VpcStack(this, {
       ipAddresses: IpAddresses.cidr("172.0.0.0/16"),

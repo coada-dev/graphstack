@@ -1,5 +1,8 @@
 # GraphStack
 
+[![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://www.postman.com/fattist/workspace/coada/collection/11209-aad271c3-d6d3-4fcc-a22a-9aa230678dc4)
+
+
 ## Description
 
 An opinionated monorepo for building a Typescript Serverless GraphQL Subgraph. This project will get an AWS-replica of a Serverless Apollo Server (v4) running on your host machine through LocalStack + AWS CDK. The overall goal of this project is to maximize environment parity from local development to production.

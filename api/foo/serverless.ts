@@ -4,7 +4,7 @@ import { getBranch } from '@cdk/helpers/branch';
 import graph from '@functions/graph';
 
 const serverlessConfiguration: AWS = {
-  service: `${getBranch()}-api-user`,
+  service: `${getBranch()}-api-foo`,
   frameworkVersion: '3',
   plugins: [
     'serverless-esbuild',
@@ -134,8 +134,8 @@ const serverlessConfiguration: AWS = {
       useChildProcesses: true,
     },
     "serverless-offline": {
-      httpPort: 3010,
-      lambdaPort: 3012,
+      httpPort: 3011,
+      lambdaPort: 3013,
       noPrependStageInUrl: true,
     },
     stage: '${self:provider.stage}',

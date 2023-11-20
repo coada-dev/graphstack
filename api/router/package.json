@@ -1,0 +1,14 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "supergraph:compose": "rover supergraph compose  --config supergraph.yaml --output supergraph.graphql"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@apollo/rover": "^0.21.0"
+  }
+}

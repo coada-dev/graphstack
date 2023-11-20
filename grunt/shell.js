@@ -11,7 +11,7 @@ const factory = (grunt, stackname) => {
 
   let vars = `CDK_ENVIRONMENT=${environment}`;
 
-  if (!local) {
+  if (!local && !process.env.CDK_ACCOUNT) {
     const [account] = arguments(["account"]);
     vars = `${vars} CDK_ACCOUNT=${account}`;
   } else if (zscaler) {

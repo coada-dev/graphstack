@@ -137,6 +137,18 @@ npx grunt local
 
 If you'd like to modify or configure a new stack for deployment, declare execution within `grunt/aliases.json` under the `local` task alias. Make sure a complimentary configuration node exists within the `grunt/cdk.js` task file that matches the alias you have already created.
 
+### Envirionment deployment from your host machine
+
+If you're deploying to any ephemeral or stable stack from your host machine:
+
+#### Region
+
+Region is hard coded to the environment within `cdk/helpers/region.ts`.
+
+#### Variables
+
+`CDK_` prefixed variables are either acceptable via `--arg` to Grunt command, unless it's hardcoded like `region`. If you'd like to shorten the commands you have to feed to Grunt via CLI, you can create a `.env.<environment>` file at the root of the project. Grunt commands will pick up those `CDK_` prefixed variables and pass them to the CDK application at runtime.
+
 ## Wallaby
 
 ### VSCode

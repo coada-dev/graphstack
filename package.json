@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/coada-dev/graphstack#readme",
   "devDependencies": {
+    "@aws-sdk/client-ssm": "^3.454.0",
     "@types/node": "^20.6.3",
     "aws-cdk": "^2.99.1",
     "aws-cdk-local": "^2.18.0",

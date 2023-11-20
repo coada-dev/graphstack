@@ -5,8 +5,7 @@ module.exports = {
       "cdk/cdk.json",
       "cdk/cdk.out",
       "cdk/output/.env.*",
-      "cdk/output/*.json",
-      "!cdk/output/<%= grunt.config.get('environment') %>-<%= grunt.config.get('branch') %>-*.json",
+      "cdk/output/*.json"
     ],
   },
 };

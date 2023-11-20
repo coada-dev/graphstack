@@ -12,8 +12,8 @@ const factory = (grunt, stackname) => {
   let vars = `CDK_ENVIRONMENT=${environment}`;
 
   if (!local) {
-    const [account, region] = arguments(["account", "region"]);
-    vars = `${vars} CDK_ACCOUNT=${account} CDK_REGION=${region}`;
+    const [account] = arguments(["account"]);
+    vars = `${vars} CDK_ACCOUNT=${account}`;
   } else if (zscaler) {
     grunt.log.oklns("ZSCALER configuration found");
     vars = `${vars} CDK_ZSCALER=true`;
@@ -141,8 +141,8 @@ module.exports = (grunt) => ({
   getSSMRecord: {
     command: () => {
       const { ci, profile } = factory(grunt);
-      const [ path, region ] = arguments(["path", "region"]);
-      let vars = `CDK_REGION=${region} SSM_PATH=${path}`;
+      const [ path] = arguments(["path"]);
+      let vars = `SSM_PATH=${path}`;
 
       if (!ci) {
         vars = `AWS_PROFILE=${profile} ${vars}`;
@@ -173,14 +173,6 @@ module.exports = (grunt) => ({
         grunt.file.write(outputPath, JSON.stringify(body, null, 2));
         return callback();
       },
-    },
-  },
-  "serverless": {
-    command: (command) => {
-      const { environment } = cdk();
-      const region = grunt.option("region") || "us-west-2";
-
-      return `npx serverless ${command} --stage ${environment} --region ${region}`;
     },
   },
 });

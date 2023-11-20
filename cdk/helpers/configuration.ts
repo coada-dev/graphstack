@@ -2,11 +2,9 @@ import { getBranch } from "#helpers/branch.ts";
 import { Environment, TLD } from "#helpers/environment.ts";
 import { getRegion, Region } from "#helpers/region.ts";
 
-import { name as appName } from "../../package.json";
-
 export const account: string = process.env.CDK_ACCOUNT || "000000000000";
 export const branch: string = getBranch();
-export const domain: string = process.env.CDK_DOMAIN || appName;
+export const domain: string = process.env.CDK_DOMAIN || "coada";
 export const environment: Environment = process.env.CDK_ENVIRONMENT
     ? Environment[process.env.CDK_ENVIRONMENT as keyof typeof Environment]
     : Environment.local;

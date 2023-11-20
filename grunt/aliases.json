@@ -4,7 +4,7 @@
   "ci:deploy": ["pre-cdk", "cdk:bin", "shell:cdk-deploy"],
   "ci:destroy": ["pre-cdk", "cdk:bin", "shell:cleanupCertificateRecords", "shell:cdk-destroy"],
   "ci:getSSMRecord": ["pre-cdk", "cdk:bin", "shell:getSSMRecord"],
-  "deploy": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-deploy"],
+  "deploy": ["pre-cdk", "clean:local", "cdk:bin", "aws:session", "shell:cdk-deploy"],
   "destroy": [
     "pre-cdk",
     "cdk:bin", 

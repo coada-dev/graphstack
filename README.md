@@ -59,14 +59,14 @@ asdf reshim nodejs
 npx grunt local
 ```
 
-From `api/user`, execute the following commands to start your Apollo Server Subraph inside your LocalStack environment:
+From `api/*`, execute the following commands to start your Apollo Server Subraph inside your LocalStack environment:
 
 ```
 asdf reshim nodejs
 npm run localstack
 ```
 
-From `api/user`, execute the following commands to start Serverless Offline and `watch` on your api:
+From `api/*`, execute the following commands to start Serverless Offline and `watch` on your api:
 
 `watch` will deploy your API to LocalStack and restart your API when changes are detected through `hot-loading`.
 
@@ -74,6 +74,28 @@ From `api/user`, execute the following commands to start Serverless Offline and 
 asdf reshim nodejs
 npm run offline
 ```
+
+### Federation
+
+Apollo allows you to deploy a the new-gen Rust Router to your local environment for Federation. Things like co-processors require an enterprise license, but the router is free to run locally.
+
+As of writing this, the repository contains two subraphs, `foo` and `user`. These services don't utilize Federation strengths, but are configured to show the capability of local Federation.
+
+After both subgraphs are deployed to your Localstack environment, `foo` and `user`, update the `api/router/supergraph.yaml` configuration with the correct API endpoints for each subgraph.
+
+`routing_url`: is used to define the endpoint that the Router dials out to when it recieves a request within it's Docker container.
+
+`subgraph_url`: is used to compose the supergraph schema required for the Router to function.
+
+```
+cd api/router
+asdf reshim nodejs
+
+npm run supergraph:compose
+docker-compose up
+```
+
+After starting the Router, you will be able to access the Router at `http://localhost:8000`. This repository uses the `8000` port range for Router in order to avoid port range conflicts with LocalStack in the `4000` range.
 
 ## Automation
 
@@ -137,7 +159,7 @@ npx grunt local
 
 If you'd like to modify or configure a new stack for deployment, declare execution within `grunt/aliases.json` under the `local` task alias. Make sure a complimentary configuration node exists within the `grunt/cdk.js` task file that matches the alias you have already created.
 
-### Envirionment deployment from your host machine
+### Environment deployment from your host machine
 
 If you're deploying to any ephemeral or stable stack from your host machine:
 

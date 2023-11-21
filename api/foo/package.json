@@ -19,8 +19,7 @@
     "@middy/core": "^3.6.2",
     "@middy/http-json-body-parser": "^3.6.2",
     "dynamoose": "^3.2.1",
-    "graphql": "^16.8.1",
-    "graphql-tag": "^2.12.6"
+    "graphql": "^16.8.1"
   },
   "devDependencies": {
     "@apollo/rover": "^0.20.0",

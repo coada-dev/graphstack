@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "lib": ["ESNext"],
     "moduleResolution": "node",
     "noUnusedLocals": true,
@@ -8,10 +9,13 @@
     "removeComments": true,
     "sourceMap": true,
     "target": "ES2020",
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "outDir": "lib"
   },
-  "include": ["src/**/*.ts", "serverless.ts"],
+  "files": ["src/@types/graphql.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.graphql", "serverless.ts"],
   "exclude": [
+    "**/*.spec.ts",
     "node_modules/**/*",
     ".serverless/**/*",
     ".webpack/**/*",

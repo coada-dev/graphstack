@@ -1,11 +1,9 @@
 federation_version: =2.3.2
 subgraphs:
   foo:
-    routing_url: http://localstack:4566/restapis/0e7g5gu4b5/local/_user_request_/graphql
     schema:
-      subgraph_url: http://localhost:4566/restapis/0e7g5gu4b5/local/_user_request_/graphql
+      subgraph_url: http://foo.execute-api.localhost.localstack.cloud:4566/graphql
   users:
-    routing_url: http://localstack:4566/restapis/p0xoeb4643/local/_user_request_/graphql
     schema:
-      subgraph_url: http://localhost:4566/restapis/p0xoeb4643/local/_user_request_/graphql
+      subgraph_url: http://user.execute-api.localhost.localstack.cloud:4566/graphql
       

@@ -26,7 +26,7 @@ const server = new ApolloServer({
   ]),
 });
 
-const requestHandler = handlers.createAPIGatewayProxyEventRequestHandler();
+const requestHandler = handlers.createAPIGatewayProxyEventV2RequestHandler();
 const serverHandler = startServerAndCreateLambdaHandler(server, requestHandler);
 
 export default middyfy(serverHandler);

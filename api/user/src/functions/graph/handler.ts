@@ -32,7 +32,7 @@ const server = new ApolloServer<Context>({
   ]),
 });
 
-const requestHandler = handlers.createAPIGatewayProxyEventRequestHandler();
+const requestHandler = handlers.createAPIGatewayProxyEventV2RequestHandler();
 const serverHandler = startServerAndCreateLambdaHandler(server, requestHandler, {
   context: async() => ({
     dataSources: {

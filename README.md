@@ -81,11 +81,9 @@ Apollo allows you to deploy a the new-gen Rust Router to your local environment 
 
 As of writing this, the repository contains two subraphs, `foo` and `user`. These services don't utilize Federation strengths, but are configured to show the capability of local Federation.
 
-After both subgraphs are deployed to your Localstack environment, `foo` and `user`, update the `api/router/supergraph.yaml` configuration with the correct API endpoints for each subgraph.
-
-`routing_url`: is used to define the endpoint that the Router dials out to when it recieves a request within it's Docker container.
-
 `subgraph_url`: is used to compose the supergraph schema required for the Router to function.
+
+If you deploy, modify, or add any new api services, you will need to update the `supergraph.yaml` to reflect your subgraphs and their requirements prior to executing this next step. This step relies heavily on Docker networking in order to connect containers to the LocalStack DNS server. Feel free to modify the subnet defined in `docker-compose.yml` to fit your network requirements.
 
 ```
 cd api/router

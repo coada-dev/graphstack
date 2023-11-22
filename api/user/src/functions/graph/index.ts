@@ -4,15 +4,15 @@ export default {
   handler: `${handlerPath(__dirname)}/handler.default`,
   events: [
     {
-      http: {
+      httpApi: {
         method: 'post',
-        path: 'graphql'
+        path: '/graphql'
       },
     },
     {
-      http: {
+      httpApi: {
         method: 'get',
-        path: 'graphql'
+        path: '/graphql'
       },
     }
   ],

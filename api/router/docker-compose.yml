@@ -7,6 +7,9 @@ networks:
 services:
   apollo:
     container_name: "router"
+    dns:
+      # Set the DNS server to be the LocalStack service network IPV4 address
+      - 10.0.2.20
     environment:
       - APOLLO_ROUTER_CONFIG_PATH=/dist/config/router.yaml
       - APOLLO_ROUTER_HOT_RELOAD=true

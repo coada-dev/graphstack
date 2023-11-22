@@ -106,7 +106,7 @@ const serverlessConfiguration: AWS = {
       httpApi: true,
     },
     logRetentionInDays: 60,
-    tags: '${self:custom.tags.${self:provider.stage}, self:custom.tags.local}' as unknown as Record<string, string>,
+    tags: '${self:custom.tags.${self:provider.stage}}' as unknown as Record<string, string>,
   },
   functions: { graph },
   package: { individually: true },
@@ -144,7 +144,7 @@ const serverlessConfiguration: AWS = {
     stage: '${self:provider.stage}',
     tags: {
       local: {
-        _custom_id_: 'local',
+        _custom_id_: 'user',
         provider: 'serverless',
       },
       development: {

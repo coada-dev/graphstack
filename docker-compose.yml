@@ -2,6 +2,10 @@ version: "3.8"
 
 networks:
   ls:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
     name: ls
 
 services:
@@ -19,7 +23,8 @@ services:
       - ./.env.local
     image: "localstack/localstack-pro:${LOCALSTACK_VERSION-2.3.2}"
     networks:
-      - ls
+      ls:
+        ipv4_address: 10.0.2.20
     ports:
       - "127.0.0.1:4566:4566" # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559" # external services port range

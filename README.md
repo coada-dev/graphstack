@@ -85,6 +85,12 @@ As of writing this, the repository contains two subraphs, `foo` and `user`. Thes
 
 If you deploy, modify, or add any new api services, you will need to update the `supergraph.yaml` to reflect your subgraphs and their requirements prior to executing this next step. This step relies heavily on Docker networking in order to connect containers to the LocalStack DNS server. Feel free to modify the subnet defined in `docker-compose.yml` to fit your network requirements.
 
+If you want to run federation locally, with enterprise features, make sure to execute your `docker-compose` command out of the `enterprise` directory.
+
+```
+cd api/router/enterprise
+```
+
 ```
 cd api/router
 asdf reshim nodejs

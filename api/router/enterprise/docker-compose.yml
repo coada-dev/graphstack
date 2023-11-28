@@ -1,0 +1,39 @@
+version: "3.8"
+
+networks:
+  ls:
+    name: ls
+
+services:
+  apollo:
+    container_name: "router"
+    dns:
+      # Set the DNS server to be the LocalStack service network IPV4 address
+      - 10.0.2.20
+    env_file:
+      - ../.env.local
+    environment:
+      - APOLLO_ROUTER_CONFIG_PATH=/dist/config/router.yaml
+      - APOLLO_ROUTER_HOT_RELOAD=true
+      - APOLLO_ROUTER_SUPERGRAPH_PATH=/dist/config/supergraph.graphql
+    image: "ghcr.io/apollographql/router:${APOLLO_ROUTER_VERSION-v1.34.0}"
+    networks:
+      - ls
+    ports:
+      - 8000:4000
+    volumes:
+      - "../router.enterprise.yaml:/dist/config/router.yaml"
+      - "../supergraph.graphql:/dist/config/supergraph.graphql"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  coprocessor:
+    container_name: "authn"
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    image: docker.io/bitnami/express:4
+    networks:
+      - ls
+    ports:
+      - 3000:3000
+    volumes:
+      - "../../coprocessor/authn:/app"

@@ -1,0 +1,29 @@
+version: "3.8"
+
+networks:
+  ls:
+    name: ls
+
+services:
+  bar:
+    container_name: "bar"
+    env_file:
+      - ../../.env.local
+    environment:
+      - AWS_RDS_HOSTNAME=localstack
+    image: docker.io/bitnami/express:4
+    networks:
+      - ls
+    ports:
+      - 3001:3000
+    volumes:
+      - ".:/app"
+  openapi:
+    container_name: "openapi"
+    image: nginx:alpine
+    ports:
+      - 8080:8080
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./specs/bar.yaml:/app/static/bar.yaml"
+    working_dir: /app

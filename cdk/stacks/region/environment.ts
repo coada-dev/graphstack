@@ -1,5 +1,6 @@
-import { Stack, StackProps } from "aws-cdk-lib";
-import { GatewayVpcEndpointAwsService, IpAddresses, Peer, Port, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import { GatewayVpcEndpointAwsService, IpAddresses, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { SubnetGroup } from "aws-cdk-lib/aws-rds";
 import { EmailIdentity, Identity } from "aws-cdk-lib/aws-ses";
 import { Construct } from "constructs";
 
@@ -78,6 +79,16 @@ export default class EnvironmentStack extends Stack {
           subnetType: SubnetType.PRIVATE_ISOLATED,
         },
       ],
+    });
+
+    new SubnetGroup(this, "subnetGroup", {
+      description: "default vpc postgres subnet group",
+      subnetGroupName: `${environment}-pg-default`,
+      removalPolicy: this.isProduction ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+      vpc,
+      vpcSubnets: {
+        subnets: [...vpc.publicSubnets, ...vpc.privateSubnets]
+      }
     });
   }
 }

@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "pg-promise": "^11.5.4"
+  },
+  "devDependencies": {
+    "@grafbase/sdk": "^0.10.1",
+    "grafbase": "^0.45.6"
+  },
+  "name": "bar",
+  "private": true,
+  "scripts": {
+    "start": "node --watch ./bin/www"
+  },
+  "version": "0.0.0"
+}

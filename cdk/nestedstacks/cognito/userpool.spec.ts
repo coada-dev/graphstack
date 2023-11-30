@@ -2,7 +2,7 @@ import { App, Stack } from "aws-cdk-lib";
 import { Template } from "aws-cdk-lib/assertions";
 import { StringAttribute } from "aws-cdk-lib/aws-cognito";
 
-import { domain, environment } from "#helpers/configuration.ts";
+import { branch, domain, environment } from "#helpers/configuration.ts";
 import UserPoolStack from "#nestedstacks/cognito/userpool.ts";
 
 const service = "createCognitoUserPool";
@@ -55,7 +55,7 @@ describe(`${service} Properties`, () => {
 
   it(`${service} domain properties`, () => {
     template.hasResourceProperties("AWS::Cognito::UserPoolDomain", {
-      Domain: `development-${domain}`,
+      Domain: `${branch}-${domain}`,
     });
   });
 

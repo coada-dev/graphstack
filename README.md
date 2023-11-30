@@ -56,7 +56,7 @@ From `cdk/`, execute the following commands to deploy your CDK stacks to LocalSt
 
 ```
 asdf reshim nodejs
-npx grunt local
+npx grunt local:clean
 ```
 
 From `api/*`, execute the following commands to start your Apollo Server Subraph inside your LocalStack environment:
@@ -158,7 +158,7 @@ npx grunt deploy --app=environment --stackname=environment
 tl:dr;
 
 ```
-npx grunt local
+npx grunt local:clean
 ```
 
 If you'd like to modify or configure a new stack for deployment, declare execution within `grunt/aliases.json` under the `local` task alias. Make sure a complimentary configuration node exists within the `grunt/cdk.js` task file that matches the alias you have already created.

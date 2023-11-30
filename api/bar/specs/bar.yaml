@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: Bar Service
+  version: 1.0
+components:
+  schemas:
+    Bar:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+paths:
+  /bar/{id}:
+    get:
+      summary: Returns a specific Bar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'A Bar'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bar'

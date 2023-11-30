@@ -6,18 +6,16 @@ db.bar.createTable();
 
 const handler = (method, uri, handler) => {
   router[method](uri, async (req, res) => {
-    try {
-      const data = await handler(req);
-      res.json({
-        success: true,
-        data
+    const data = handler(req)
+      .then((data) => {
+        res.json({
+          ...data
+        });
+      }).catch(error => {
+        res.json({
+          error:  error.message || error
+        });
       });
-    } catch (error) {
-      res.json({
-        success: false,
-        error: error.message || error.toString()
-      })
-    }
   });
 };
 

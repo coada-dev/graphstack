@@ -14,17 +14,27 @@
   ],
   "diff": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-diff"],
   "getSSMRecord": ["pre-cdk", "cdk:bin", "shell:getSSMRecord"],
-  "local": [
+  "local:clean": [
     "pre-cdk",
     "clean:local",
     "stack:environment",
     "stack:security",
-    "stack:schema-user",
+    "stack:schema-user-ddb",
+    "stack:schema-user-pg",
+    "timer"
+  ],
+  "local:cache": [
+    "pre-cdk",
+    "stack:environment",
+    "stack:security",
+    "stack:schema-user-ddb",
+    "stack:schema-user-pg",
     "timer"
   ],
   "pre-cdk": ["timer", "environment", "dotenv", "branch"],
   "stack:environment": ["cdk:environment", "shell:cdk-bootstrap", "shell:cdk-deploy:environment"],
-  "stack:schema-user": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user"],
+  "stack:schema-user-ddb": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user-ddb"],
+  "stack:schema-user-pg": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user-pg"],
   "stack:security": ["cdk:security", "shell:cdk-bootstrap", "shell:cdk-deploy:security"],
   "synth": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-synth"]
 }

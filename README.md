@@ -104,19 +104,26 @@ localstack  | 2023-12-03T03:04:34.315 DEBUG --- [   asgi_gw_3] l.bootstrap.email
 
 You can use the following settings to lease an auth token from your LocalStack Cognito User Pool without the need of a web client, with a client like Postman:
 
-Type: Oauth 2.0
-Add auth data to: Request Headers
-Header Prefix: Bearer
-Grant Type: Authorization Code
-Callback URL: https://authentication.default.local.sandbox.localhost/idp/callback
-Auth URL:
+- Type: Oauth 2.0
+- Add auth data to: Request Headers
+- Header Prefix: Bearer
+- Grant Type: Authorization Code
+- Callback URL: https://authentication.default.local.sandbox.localhost/idp/callback
+- Auth URL:
+
+
 ```
 https://localhost.localstack.cloud/_aws/cognito-idp/login?response_type=code&client_id=<pool_client_id>&redirect_uri=https://authentication.default.local.sandbox.localhost/idp/callback
 ```
-Access Token URL: http://localhost:4566/_aws/cognito-idp/oauth2/token
-Client Authentication: Send as Basic Auth header
 
-The Callback URL needs to match the URL that is configured for your Cognito pool client.
+
+- Access Token URL: http://localhost:4566/_aws/cognito-idp/oauth2/token
+- Client Authentication: Send as Basic Auth header
+
+The Callback URL needs to match the URL that is configured for your Cognito pool client. The auth URL needs the client id for the pool: 
+```
+awslocal cognito-idp list-user-pool-clients --user-pool-id us-west-2_local
+```
 
 ### Federation
 

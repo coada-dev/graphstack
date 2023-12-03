@@ -1,6 +1,10 @@
 import { NestedStack } from "aws-cdk-lib";
 import {
   CfnUserPoolClient,
+  IUserPool,
+  IUserPoolResourceServer,
+  OAuthScope,
+  ResourceServerScope,
   UserPool,
   UserPoolClient,
   UserPoolClientProps,
@@ -16,7 +20,11 @@ import { Ports } from "#helpers/ports.ts"
 export default class ClientStack extends NestedStack {
   private application: string;
 
-  public readonly userPool: UserPool;
+  private customScopes: ResourceServerScope[];
+
+  private resourceServer: IUserPoolResourceServer;
+
+  public readonly userPool: IUserPool;
 
   public readonly userPoolClient: UserPoolClient;
 
@@ -24,17 +32,42 @@ export default class ClientStack extends NestedStack {
     scope: Construct,
     logicalID: string,
     userPoolClientProps: UserPoolClientProps,
+    customScopes: string[] = [],
   ) {
     super(scope, logicalID, {});
 
     this.application = logicalID;
+    this.userPool = userPoolClientProps.userPool;
+    this.customScopes = customScopes.map((scope) => {
+      return new ResourceServerScope({
+        scopeDescription: scope,
+        scopeName: scope,
+      })
+    });
+
+    if (this.customScopes.length) {
+      this.resourceServer = this.createResourceServer(customScopes);
+    }
+
     this.userPoolClient = this.createClient(userPoolClientProps);
+  }
+
+  createResourceServer(customScopes: string[]) {
+    const namespace = `${branch}-${this.application}-resource-server`;
+
+    return this.userPool.addResourceServer(
+      namespace,
+      {
+        identifier: namespace,
+        scopes: this.customScopes,
+      },
+    );
   }
 
   createClient(userPoolClientProps: UserPoolClientProps) {
     const namespace = `${branch}-${this.application}-client`;
     const userPoolClientName = isLocal(environment) ? `_custom_id_:${namespace}` : namespace;
-    const userPoolClient: UserPoolClient = userPoolClientProps.userPool.addClient(
+    const userPoolClient: UserPoolClient = this.userPool.addClient(
       namespace,
       {
         preventUserExistenceErrors: true,
@@ -55,12 +88,16 @@ export default class ClientStack extends NestedStack {
       "AllowedOAuthFlowsUserPoolClient",
       true,
     );
-    cfnUserPoolClient.addPropertyOverride("AllowedOAuthScopes", [
-      "aws.cognito.signin.user.admin",
-      "email",
-      "openid",
-      "profile"
-    ]);
+    cfnUserPoolClient.addPropertyOverride(
+      "AllowedOAuthScopes",
+      [
+        "aws.cognito.signin.user.admin",
+        "email",
+        "openid",
+        "profile",
+        ...this.customScopes.map(scope => OAuthScope.resourceServer(this.resourceServer, scope).scopeName)
+      ]
+    );
     cfnUserPoolClient.addPropertyOverride("CallbackURLs", [
       `https://${branch}.${this.application}.${fqdn}/idp/callback`,
       `https://${branch}.${this.application}.${environment}.${domain}.localhost:${Ports.vite}/idp/callback`,

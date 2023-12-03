@@ -22,16 +22,19 @@ export default class CognitoClientStack extends Stack {
       StringParameter.valueFromLookup(this, "/cognito/userPoolId"),
     );
 
-    ({ userPoolClient: this.userPoolClient } = this.createClient({
-      supportedIdentityProviders: [
-        UserPoolClientIdentityProvider.COGNITO,
-        UserPoolClientIdentityProvider.GOOGLE,
-      ],
-      userPool: this.userPool,
-    }));
+    ({ userPoolClient: this.userPoolClient } = this.createClient(
+      {
+        supportedIdentityProviders: [
+          UserPoolClientIdentityProvider.COGNITO,
+          UserPoolClientIdentityProvider.GOOGLE,
+        ],
+        userPool: this.userPool,
+      },
+      ["qux:quux"]
+    ));
   }
 
-  createClient(userPoolClientProps: UserPoolClientProps) {
-    return new ClientStack(this, this.application, userPoolClientProps);
+  createClient(userPoolClientProps: UserPoolClientProps, customScopes: string[] = []) {
+    return new ClientStack(this, this.application, userPoolClientProps, customScopes);
   }
 }

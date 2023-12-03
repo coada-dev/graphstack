@@ -55,7 +55,7 @@ type Query
   @join__type(graph: FOO)
   @join__type(graph: USERS)
 {
-  heyFoo(name: String): String @join__field(graph: FOO) @requiresScopes(scopes: [["email"]])
+  heyFoo(name: String): String @join__field(graph: FOO) @requiresScopes(scopes: [["development-default-resource-server/foo:bar"]])
   getUser(id: ID): User @join__field(graph: USERS)
   heyUser(name: String): String @join__field(graph: USERS)
 }

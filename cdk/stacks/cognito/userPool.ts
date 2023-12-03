@@ -28,7 +28,7 @@ export default class CognitoUserPoolStack extends Stack {
         UserPoolClientIdentityProvider.GOOGLE,
       ],
       userPool: this.userPool,
-    });
+    }, ["foo:bar"]);
 
     // NOTE: AWS-provided client doesn't accept userPool Interfaces
     // requires physical pool construct

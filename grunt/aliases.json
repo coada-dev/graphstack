@@ -14,13 +14,9 @@
   ],
   "diff": ["pre-cdk", "cdk:bin", "aws:session", "shell:cdk-diff"],
   "getSSMRecord": ["pre-cdk", "cdk:bin", "shell:getSSMRecord"],
-  "local:clean": [
+  "local:branch": [
     "pre-cdk",
-    "clean:local",
-    "stack:environment",
-    "stack:security",
-    "stack:schema-user-ddb",
-    "stack:schema-user-pg",
+    "stack:cognito-client",
     "timer"
   ],
   "local:cache": [
@@ -29,10 +25,23 @@
     "stack:security",
     "stack:schema-user-ddb",
     "stack:schema-user-pg",
+    "stack:cognito-pool",
+    "timer"
+  ],
+  "local:clean": [
+    "pre-cdk",
+    "clean:local",
+    "stack:environment",
+    "stack:security",
+    "stack:schema-user-ddb",
+    "stack:schema-user-pg",
+    "stack:cognito-pool",
     "timer"
   ],
   "pre-cdk": ["timer", "environment", "dotenv", "branch"],
   "stack:environment": ["cdk:environment", "shell:cdk-bootstrap", "shell:cdk-deploy:environment"],
+  "stack:cognito-client": ["cdk:cognito-pool", "shell:cdk-bootstrap", "shell:cdk-deploy:cognito-client"],
+  "stack:cognito-pool": ["cdk:cognito-pool", "shell:cdk-bootstrap", "shell:cdk-deploy:cognito-pool"],
   "stack:schema-user-ddb": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user-ddb"],
   "stack:schema-user-pg": ["cdk:schema-user", "shell:cdk-bootstrap", "shell:cdk-deploy:schema-user-pg"],
   "stack:security": ["cdk:security", "shell:cdk-bootstrap", "shell:cdk-deploy:security"],

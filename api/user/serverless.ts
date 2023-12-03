@@ -27,6 +27,14 @@ const serverlessConfiguration: AWS = {
       REGION: '${self:provider.region}',
     },
     httpApi: {
+      authorizers: {
+        cognito: {
+          type: 'jwt',
+          identitySource: '$request.header.Authorization',
+          issuerUrl: '${ssm:/cognito/userPoolProviderUrl}',
+          audience: '${ssm:/cognito/authentication-default-userPoolClientId}',
+        },
+      },
       cors: true,
     },
     iam: {

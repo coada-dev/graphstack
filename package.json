@@ -27,6 +27,7 @@
   "devDependencies": {
     "@aws-sdk/client-ssm": "^3.454.0",
     "@types/node": "^20.6.3",
+    "amazon-cognito-passwordless-auth": "^0.10.0",
     "aws-cdk": "^2.99.1",
     "aws-cdk-local": "^2.18.0",
     "dotenv": "^16.3.1",

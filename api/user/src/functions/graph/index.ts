@@ -5,12 +5,18 @@ export default {
   events: [
     {
       httpApi: {
+        authorizer: {
+          name: 'cognito'
+        },
         method: 'post',
         path: '/graphql'
       },
     },
     {
       httpApi: {
+        authorizer: {
+          name: 'cognito'
+        },
         method: 'get',
         path: '/graphql'
       },

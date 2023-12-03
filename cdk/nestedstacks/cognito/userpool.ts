@@ -1,4 +1,4 @@
-import { NestedStack, RemovalPolicy } from "aws-cdk-lib";
+import { NestedStack, RemovalPolicy, Tags } from "aws-cdk-lib";
 import {
   AccountRecovery,
   AdvancedSecurityMode,
@@ -15,7 +15,7 @@ import {
 import { Construct } from "constructs";
 
 import { branch, domain, environment, region } from "#helpers/configuration.ts";
-import { isProd } from "#helpers/environment.ts";
+import { isLocal, isProd } from "#helpers/environment.ts";
 import handleOutputs from "#helpers/outputs.ts";
 
 export default class UserPoolStack extends NestedStack {
@@ -30,6 +30,11 @@ export default class UserPoolStack extends NestedStack {
     super(scope, "userpool", {});
 
     this.userPool = this.createPool(userPoolProps);
+
+    if (isLocal(environment)) {
+      Tags.of(this.userPool).add("_custom_id_", `${region}_local`);
+    }
+
     this.createDomain();
     this.createGoogleIDPOIDC({
       email: ProviderAttribute.GOOGLE_EMAIL,

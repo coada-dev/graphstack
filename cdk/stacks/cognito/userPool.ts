@@ -21,7 +21,7 @@ export default class CognitoUserPoolStack extends Stack {
     }));
 
     // NOTE: add Fido2 settings to default client
-    const application = "dashboard";
+    const application = "default";
     const { userPoolClient } = new ClientStack(this, application, {
       supportedIdentityProviders: [
         UserPoolClientIdentityProvider.COGNITO,
@@ -32,10 +32,10 @@ export default class CognitoUserPoolStack extends Stack {
 
     // NOTE: AWS-provided client doesn't accept userPool Interfaces
     // requires physical pool construct
-    CognitoUserPoolClientStackPasswordless.createPasswordlessClient(
-      this,
-      this.userPool,
-      { application, userPoolClient }
-    );
+    // CognitoUserPoolClientStackPasswordless.createPasswordlessClient(
+    //   this,
+    //   this.userPool,
+    //   { application, userPoolClient }
+    // );
   }
 }

@@ -22,7 +22,7 @@ services:
     ports:
       - 8000:4000
     volumes:
-      - "../router.enterprise.yaml:/dist/config/router.yaml"
+      - "./router.yaml:/dist/config/router.yaml"
       - "../supergraph.graphql:/dist/config/supergraph.graphql"
       - "/var/run/docker.sock:/var/run/docker.sock"
   coprocessor:

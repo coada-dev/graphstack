@@ -13,6 +13,7 @@ new CognitoUserPoolStack(app, `${branch}-cognito-pool`, {
   env: { account, region },
 });
 
-new CognitoClientStack(app, `${branch}-cognito-client`, "dashboard", {
+const client = process.env.CDK_COGNITO_CLIENT_NAME || "client";
+new CognitoClientStack(app, `${branch}-cognito-client`, client, {
   env: { account, region },
 });

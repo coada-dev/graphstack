@@ -6,7 +6,7 @@ extend schema
 
 type Query  {
     getUser(id: ID): User
-    heyUser(name: String): String!
+    heyUser(name: String): String
 }
 
 type User @key(fields: "id") @shareable {

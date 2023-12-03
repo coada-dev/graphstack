@@ -52,11 +52,17 @@ From the root of the repository, execute the following commands to start your Lo
 docker-compose up
 ```
 
-From `cdk/`, execute the following commands to deploy your CDK stacks to LocalStack environment:
+From the root of the repository execute the following commands to deploy your CDK stacks to LocalStack environment:
 
 ```
 asdf reshim nodejs
 npx grunt local:clean
+```
+
+If you want to deploy any additional stacks that require either a license, or are not environment-based, execute those commands from the root of the repository:
+
+```
+npx grunt cdk:schema:user
 ```
 
 From `api/*`, execute the following commands to start your Apollo Server Subraph inside your LocalStack environment:
@@ -73,6 +79,50 @@ From `api/*`, execute the following commands to start Serverless Offline and `wa
 ```
 asdf reshim nodejs
 npm run offline
+```
+
+### Authentication
+
+If you're developing and want to enforce auth-n, and plan on using Cognito pools, you will need to create a LocalStack license. Create a local environment file `.env.local`, and place your LocalStack auth token in the file so it can be picked up at boot time by Docker Compose.
+
+Before executing, make sure your supergraph schema is configured before you start the router.
+
+```
+asdf reshim nodejs
+npx grunt cdk:auth
+node ./scripts/register.js
+cd api/router/enterprise
+docker-compose up
+```
+
+The register script will register a user with your Cognito pool. User credentials are defined within the `scripts/register.js` file. Feel free to modify the script to your liking. Pay attention to the prompt. You will need to get your user confirmation code from your Localstack session or logs. The tail output will resemble something like the following:
+
+```
+localstack  | 2023-12-03T03:04:34.315  INFO --- [   asgi_gw_3] l.s.cognito_idp.provider   : Confirmation code for Cognito user user+1@coada.dev: 349533
+localstack  | 2023-12-03T03:04:34.315 DEBUG --- [   asgi_gw_3] l.bootstrap.email_utils    : SMTP settings not configured, skip sending email to "user+1@coada.dev"
+```
+
+You can use the following settings to lease an auth token from your LocalStack Cognito User Pool without the need of a web client, with a client like Postman:
+
+- Type: Oauth 2.0
+- Add auth data to: Request Headers
+- Header Prefix: Bearer
+- Grant Type: Authorization Code
+- Callback URL: https://authentication.default.local.sandbox.localhost/idp/callback
+- Auth URL:
+
+
+```
+https://localhost.localstack.cloud/_aws/cognito-idp/login?response_type=code&client_id=<pool_client_id>&redirect_uri=https://authentication.default.local.sandbox.localhost/idp/callback
+```
+
+
+- Access Token URL: http://localhost:4566/_aws/cognito-idp/oauth2/token
+- Client Authentication: Send as Basic Auth header
+
+The Callback URL needs to match the URL that is configured for your Cognito pool client. The auth URL needs the client id for the pool: 
+```
+awslocal cognito-idp list-user-pool-clients --user-pool-id us-west-2_local
 ```
 
 ### Federation

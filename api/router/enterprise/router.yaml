@@ -1,3 +1,8 @@
+authentication:
+  router:
+    jwt:
+      jwks:
+        - url: http://localstack:4566/us-west-2_local/.well-known/jwks.json
 authorization:
   preview_directives:
     enabled: true
@@ -8,6 +13,11 @@ coprocessor:
       context: true
 cors:
   allow_any_origin: true
+headers:
+  all:
+    request:
+      - propagate:
+          matching: authorization
 health_check:
   listen: 0.0.0.0:4000
   enabled: true

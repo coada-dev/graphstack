@@ -3,6 +3,11 @@ module.exports = {
     output: "cdk.json",
     template: "cdk.template.json",
   },
+  "cognito-pool": {
+    output: "cdk.json",
+    stack: "cognito",
+    template: "cdk.template.json",
+  },
   environment: {
     output: "cdk.json",
     stack: "environment",

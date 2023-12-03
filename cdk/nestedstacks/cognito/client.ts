@@ -9,6 +9,7 @@ import {
 import { Construct } from "constructs";
 
 import { branch, domain, environment, fqdn, region } from "#helpers/configuration.ts";
+import { isLocal } from "#helpers/environment.ts";
 import handleOutputs from "#helpers/outputs.ts";
 import { Ports } from "#helpers/ports.ts"
 
@@ -32,13 +33,13 @@ export default class ClientStack extends NestedStack {
 
   createClient(userPoolClientProps: UserPoolClientProps) {
     const namespace = `${branch}-${this.application}-client`;
-
+    const userPoolClientName = isLocal(environment) ? `_custom_id_:${namespace}` : namespace;
     const userPoolClient: UserPoolClient = userPoolClientProps.userPool.addClient(
       namespace,
       {
         preventUserExistenceErrors: true,
         supportedIdentityProviders: userPoolClientProps.supportedIdentityProviders,
-        userPoolClientName: namespace,
+        userPoolClientName,
       },
     );
 

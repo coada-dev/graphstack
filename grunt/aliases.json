@@ -23,9 +23,6 @@
     "pre-cdk",
     "stack:environment",
     "stack:security",
-    "stack:schema-user-ddb",
-    "stack:schema-user-pg",
-    "stack:cognito-pool",
     "timer"
   ],
   "local:clean": [
@@ -33,9 +30,27 @@
     "clean:local",
     "stack:environment",
     "stack:security",
+    "timer"
+  ],
+  "local:clean:all": [
+    "pre-cdk",
+    "clean:local",
+    "stack:environment",
+    "stack:security",
     "stack:schema-user-ddb",
     "stack:schema-user-pg",
     "stack:cognito-pool",
+    "timer"
+  ],
+  "cdk:auth": [
+    "pre-cdk",
+    "stack:cognito-pool",
+    "timer"
+  ],
+  "cdk:schema:user": [
+    "pre-cdk",
+    "stack:schema-user-ddb",
+    "stack:schema-user-pg",
     "timer"
   ],
   "pre-cdk": ["timer", "environment", "dotenv", "branch"],

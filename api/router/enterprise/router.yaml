@@ -2,7 +2,7 @@ authentication:
   router:
     jwt:
       jwks:
-        - url: http://localstack:4566/us-west-2_1a0bd7b7cc85451d83f3b9552ef85b4d/.well-known/jwks.json
+        - url: http://localstack:4566/us-west-2_local/.well-known/jwks.json
 authorization:
   preview_directives:
     enabled: true

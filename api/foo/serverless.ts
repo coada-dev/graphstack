@@ -3,8 +3,9 @@ import type { AWS } from '@serverless/typescript';
 import { getBranch } from '@cdk/helpers/branch';
 import graph from '@functions/graph';
 
+const branch = getBranch();
 const serverlessConfiguration: AWS = {
-  service: `${getBranch()}-api-foo`,
+  service: `${branch}-api-foo`,
   frameworkVersion: '3',
   plugins: [
     'serverless-esbuild',
@@ -27,6 +28,14 @@ const serverlessConfiguration: AWS = {
       REGION: '${self:provider.region}',
     },
     httpApi: {
+      authorizers: {
+        cognito: {
+          type: 'jwt',
+          identitySource: '$request.header.Authorization',
+          issuerUrl: '${ssm:/cognito/userPoolProviderUrl}',
+          audience: '${ssm:/cognito/${self:custom.branch}-default-userPoolClientId}',
+        },
+      },
       cors: true,
     },
     iam: {
@@ -107,10 +116,21 @@ const serverlessConfiguration: AWS = {
     },
     logRetentionInDays: 60,
     tags: '${self:custom.tags.${self:provider.stage}}' as unknown as Record<string, string>,
+    tracing: {
+      apiGateway: true,
+      lambda: true,
+    },
+    vpc: {
+      securityGroupIds: [
+        '${ssm:/ec2/sg/apiGWSecurityGroupID}'
+      ],
+      subnetIds: '${ssm:/vpc/vpcPrivateSubnets}' as unknown as string[],
+    }
   },
   functions: { graph },
   package: { individually: true },
   custom: {
+    branch,
     esbuild: {
       bundle: true,
       concurrency: 10,
@@ -160,18 +180,6 @@ const serverlessConfiguration: AWS = {
         provider: 'serverless',
       },
     },
-    tracing: {
-      apiGateway: true,
-      lambda: true,
-    },
-    vpc: {
-      securityGroupIds: [
-        '${ssm:/ec2/sg/apiGWSecurityGroupID}'
-      ],
-      subnetIds: [
-        '{split(${ssm:/vpc/vpcPrivateSubnets}, ",")}'
-      ]
-    }
   },
 };
 

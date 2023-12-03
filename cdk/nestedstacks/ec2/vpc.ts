@@ -7,7 +7,7 @@ import { Bucket } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 
 import { branch, region } from "#helpers/configuration.ts";
-import handleOutputs from "#helpers/outputs.ts";
+import handleOutputs, { handleOutputsList } from "#helpers/outputs.ts";
 
 export default class VpcStack extends NestedStack {
   protected flowLogRole: Role;
@@ -65,32 +65,32 @@ export default class VpcStack extends NestedStack {
   }
 
   outputs() {
-    handleOutputs(
+    handleOutputsList(
       this,
       {
         label: "vpcIsolatedSubnets",
         region,
         service: "vpc",
       },
-      this.vpc.isolatedSubnets.map((s) => s.subnetId).join(","),
+      this.vpc.isolatedSubnets.map((s) => s.subnetId),
     );
-    handleOutputs(
+    handleOutputsList(
       this,
       {
         label: "vpcPrivateSubnets",
         region,
         service: "vpc",
       },
-      this.vpc.privateSubnets.map((s) => s.subnetId).join(","),
+      this.vpc.privateSubnets.map((s) => s.subnetId),
     );
-    handleOutputs(
+    handleOutputsList(
       this,
       {
         label: "vpcPublicSubnets",
         region,
         service: "vpc",
       },
-      this.vpc.publicSubnets.map((s) => s.subnetId).join(","),
+      this.vpc.publicSubnets.map((s) => s.subnetId),
     );
     handleOutputs(
       this,

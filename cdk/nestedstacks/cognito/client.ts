@@ -59,7 +59,7 @@ export default class ClientStack extends NestedStack {
       "aws.cognito.signin.user.admin",
       "email",
       "openid",
-      "profile",
+      "profile"
     ]);
     cfnUserPoolClient.addPropertyOverride("CallbackURLs", [
       `https://${branch}.${this.application}.${fqdn}/idp/callback`,

@@ -22,6 +22,8 @@ services:
     ports:
       - 8000:4000
     volumes:
+      - "./claims_forwarding.rhai:/dist/rhai/claims_forwarding.rhai"
+      - "./main.rhai:/dist/rhai/main.rhai"
       - "./router.yaml:/dist/config/router.yaml"
       - "../supergraph.graphql:/dist/config/supergraph.graphql"
       - "/var/run/docker.sock:/var/run/docker.sock"

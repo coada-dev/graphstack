@@ -5,5 +5,5 @@ extend schema
 )
 
 type Query  {
-    heyFoo(name: String): String @requiresScopes(scopes: [["email"]])
+    heyFoo(name: String): String @requiresScopes(scopes: [["development-default-resource-server/foo:bar"]])
 }

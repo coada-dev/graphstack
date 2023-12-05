@@ -6,6 +6,7 @@ authentication:
 authorization:
   preview_directives:
     enabled: true
+  require_authentication: true
 coprocessor:
   url: http://authn:3000/
   router:
@@ -17,7 +18,7 @@ headers:
   all:
     request:
       - propagate:
-          matching: authorization
+          named: "Authorization"
 health_check:
   listen: 0.0.0.0:4000
   enabled: true
@@ -25,6 +26,9 @@ homepage:
   enabled: false
 include_subgraph_errors:
   all: true
+rhai:
+  main: "main.rhai"
+  scripts: "/dist/rhai"
 sandbox:
   enabled: true
 supergraph:

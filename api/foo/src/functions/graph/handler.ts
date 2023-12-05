@@ -11,11 +11,15 @@ import { parse } from 'graphql';
 import FooTypeDefs from '@schemas/foo.graphql';
 import FooResolvers from '@resolvers/foo';
 
+export interface Context {
+  headers: Record<string, string>;
+}
+
 const environment = getEnvironment(Environment[process.env.NODE_ENV as keyof typeof Environment]);
 
 const isProduction = isProd(environment);
 
-const server = new ApolloServer({
+const server = new ApolloServer<Context>({
   introspection: !isProduction,
   plugins: [ApolloServerPluginInlineTrace()],
   schema: buildSubgraphSchema([
@@ -27,6 +31,10 @@ const server = new ApolloServer({
 });
 
 const requestHandler = handlers.createAPIGatewayProxyEventV2RequestHandler();
-const serverHandler = startServerAndCreateLambdaHandler(server, requestHandler);
+const serverHandler = startServerAndCreateLambdaHandler(server, requestHandler, {
+  context: async ({ event }) => ({
+    headers: event.headers
+  }),
+});
 
 export default middyfy(serverHandler);

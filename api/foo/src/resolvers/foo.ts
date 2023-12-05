@@ -2,7 +2,7 @@ import { Resolvers } from "../types/foo";
 
 const resolvers: Resolvers = {
   Query: {
-    heyFoo: (_, { name }) => `hey ${name}!`,
+    heyFoo: (_, { name }, context) => `hey ${name}!`,
   }
 };
 
